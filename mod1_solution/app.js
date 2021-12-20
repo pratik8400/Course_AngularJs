@@ -2,33 +2,32 @@
     "use strict";
 
     angular.module("LunchCheck", [])
-        .controller("LunchCheckController", function ($scope){
-            $scope.menu = "";
-            $scope.totalMenuItems = "";
-            $scope.check = function (value){
-               console.log(value)
+        .controller("LunchCheckController", LunchCheckController);
 
-            var totalMenuItems = calculateItems(value);
-            $scope.totalMenuItems = totalMenuItems;
+    LunchCheckController.$inject = ['$scope'];
 
-            };
+    function LunchCheckController($scope) {
+        $scope.menu = "";
+        $scope.totalMenuItems = "";
 
-            function calculateItems(string){
-               console.log(string)
+        $scope.check = function () {
+            console.log($scope.menu)
 
-                /* const totalItemValue = string.split(",");
-                let items = totalItemValue.length;
+            //var totalMenuItems = calculateItems(value);
+            //$scope.totalMenuItems = totalMenuItems;
+            let totalItemValue = $scope.menu.split(",");
+            totalItemValue = totalItemValue.filter((i)=> i.trim().length > 0)
+            let items = totalItemValue.length;
+            console.log(items)
 
-                if (items <= 3){
-                    return "Enjoy!"
-                }
-                else if (items === 0) {
-                    return "Please enter data first"
-                }
-                else{
-                    return "Too much!"
-                }*/
+            if (items === 0) {
+                $scope.totalMenuItems = "Please enter data first";
+            } else if (items <= 3) {
+                $scope.totalMenuItems = "Enjoy!";
+            } else {
+                $scope.totalMenuItems = "Too much!";
             }
+        };
+    }
 
-        });
 })();
